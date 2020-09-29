@@ -1,0 +1,1 @@
+[{"model": "mainapp.site", "pk": 1, "fields": {"sitename": "lenta.ru", "siteicon": "lenta_ico.ico", "siteurl": "http://lenta.ru/rss/news", "feedscount": 3, "active": true}}, {"model": "mainapp.site", "pk": 2, "fields": {"sitename": "hh", "siteicon": "", "siteurl": "https://hh.ru", "feedscount": 5, "active": true}}]

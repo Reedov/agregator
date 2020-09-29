@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+</br>
+	<form method="post" action=".">
+			{% csrf_token %}
+
+			{% for key,field in form.fields.items %}
+				<div class="columns mb-0 is-gapless">
+					<div class="column is-2"> <label>{{key}}</label> </div> 
+
+					<div class="column is-1">
+					{%if key in  profile_subscribes %}
+						<input type="checkbox" name="{{key}}"  checked>
+					{%else%}
+						<input type="checkbox" name="{{key}}">
+					{%endif%}
+					</div>
+				</div>
+			{% endfor %}
+			<div><button class="button is-success" type="submit">Сохранить</button></div>
+	</form>
+
+{%endblock%}	

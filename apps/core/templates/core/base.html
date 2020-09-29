@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<!--метаинформация-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--заголовок-->
+	<title>{{sitesettings.title}}</title>
+	<!--стили (bulma) -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+	<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}">
+	<style type="text/css">
+		section {background: lavender;}
+		a {color: #0b2911; }
+		.feeditem {border: 1px solid;border-color: #bdbdff; box-shadow: 0 0 10px rgba(0,0,0,0.5); margin: 3px 0px; }
+		.topline{font-size: 0.8em;}
+		.blocktime {display: inline-flex;}
+		.timestamp{font-family:Arial;font-size: 0.7em;}
+		.siteicon{margin: 0 2px;}
+		.description {font-size: 0.8em;font-family:Arial}
+		.footer {padding: 1rem 0rem 1rem;background-color: #3298dc;}
+		.sitetitle{cursor: pointer; }
+		.siteimage { box-shadow: 0 0 10px rgba(0,0,0,0.5);}
+	</style>
+
+	
+</head>
+<body>
+	<!--navigation bar-->
+	<nav class="navbar is-info" role="navigation">
+		<div class="navbar-brand">
+			<a href="/" class="navbar-item"><strong>{{sitesettings.title}}</strong></a>
+			<a role="button" class="navbar-burger"  data-target="navMenu" aria-label="menu" aria-expanded="false">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</a>
+		</div>
+
+
+		<div class="navbar-menu" id="navMenu">
+			<div class="navbar-end">
+				<div class="navbar-item" >
+					<div class="buttons">
+						{% if request.user.is_authenticated %}
+							<a href="{% url 'get_profile' user %}" class="button is-light">Profile</a>
+							<a href="{% url 'logout' %}" class="button is-danger">Выйти</a>
+						{% else %}
+							<a href="{% url 'login' %}" class="button is-light">Войти</a>
+						{% endif %}
+					</div>	
+				</div>
+			</div>
+		</div>
+
+
+	</nav>
+
+	<div class="topline">
+
+		<span class="">{% now "H:i d-m-y" %}</span>
+		{% if request.user.is_authenticated %}
+		<span class="">{{user}}</span>
+		{%else%}
+		<span class="">нужно авторизоваться чтобы видеть все фиды</span>
+		{% endif %}
+	</div>
+
+	<!--конец nav bar-->
+
+	<!--контент-->
+	<section class="section">
+		{% block content %}
+		{%endblock%}	
+	</section>
+    <!--конец блока контент-->
+
+    <footer class="footer">
+  		<div class="content has-text-centered ">
+    		<p>@2020 Вячеслав К.</p>
+  	</div>
+	</footer>
+   
+
+
+
+    <!--Vue.js-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+ <script>
+    	document.addEventListener('DOMContentLoaded', () => {
+
+  // Get all "navbar-burger" elements
+  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+  // Check if there are any navbar burgers
+  if ($navbarBurgers.length > 0) {
+
+    // Add a click event on each of them
+    $navbarBurgers.forEach( el => {
+      el.addEventListener('click', () => {
+
+        // Get the target from the "data-target" attribute
+        const target = el.dataset.target;
+        const $target = document.getElementById(target);
+
+        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+        el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+
+      });
+    });
+  }
+
+});
+    </script>
+	<!--End Vue.js-->
+</body>
+</html>

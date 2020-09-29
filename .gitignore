@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.pyc
+env/
+venv/
+static/
+db.sqlite3
+*.log
+log/
+media/
+celerybeat-schedule
+*.ico
+*.jpg
+

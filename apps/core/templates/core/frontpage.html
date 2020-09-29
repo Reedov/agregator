@@ -1,0 +1,90 @@
+{%extends 'core/base.html' %}
+
+{%block content%}
+<div class="container" >
+</div>
+
+	<div class = "sites">
+    {% for site in sites %}
+
+    	{% if site in profile_sites %} {# если сайт есть в списке сайтов профиля #}
+        <a href="{{ site.id}}" ><img src="/media/{{site.icon}}"  width="16" height="16" alt=""></a>
+    	{% else %}
+    	<img src="/media/{{site.icon}}"  width="16" height="16" alt="" style="filter: blur(1px);">
+    	{% endif %}
+    {% endfor %}
+	</div>
+
+
+	<!-- Feeds -->
+	{%for feed in feeds %}
+	<div class="feeditem" id = "{{feed.id}}" >
+		<div class="columns is-gapless mb-0 has-background-link-light sitetitle" onclick="hideContent(this)" >	  <div class="blocktime">
+				<div class="timestamp">{{feed.timestamp|date:"d-m H:i"}}</div>
+				<div class="siteicon"><img src="/media/{{feed.site.icon}}"  width="16" height="16" alt=""></a></div>
+			</div>
+			<div class="column is-10">{{feed.title}}</div>
+		</div>	
+		<div class="showhide columns is-gapless mb-1 " style="display:flex;">
+				
+				
+				{% if  not feed.feed_image_url %}
+				<div class="column is-12"><a href="{{feed.feed_url}}"><div class="description">{{feed.description}}</div></a></div>
+				{%else%}
+				<div class="column is-11"><a href="{{feed.feed_url}}"><div class="description">{{feed.description}}</div></a></div>
+				<div class="feedimage column is-1"><div class="siteimage"><a href="{{feed.feed_url}}"><img src="{{feed.feed_image_url}}" width="220" height="150" alt=""></a></div></div>
+				{%endif%}
+		</div>
+	</div>
+
+		
+	{%endfor%}
+	<!-- End of Feeds -->
+
+	<!-- Paginator -->
+	<div class="pagination mt-2 is-small">
+	    <span class="step-links">
+	        {% if feeds.has_previous %}
+	            <a href="?page={{ feeds.previous_page_number }}" class="pagination-previous"><<</a>
+	        {% endif %}
+
+	        <span class="current pagination-link ">
+	            Page {{ feeds.number }} of {{ feeds.paginator.num_pages }}.
+	        </span>
+
+	        {% if feeds.has_next %}
+	            <a href="?page={{ feeds.next_page_number }}" class="pagination-next">>></a>
+	        {% endif %}
+	    </span>
+    </div>
+    <!-- End of Paginator -->
+
+
+
+
+
+<script>
+function showContent(v){
+    parent = v.parentElement
+    divcontent = parent.getElementsByClassName('showhide')[0]
+    divcontent.style = 'display:flex;'
+    v.setAttribute('onclick','hideContent(this)');
+    
+}
+
+function hideContent(v){
+    parent = v.parentElement
+    divcontent = parent.getElementsByClassName('showhide')[0]
+    divcontent.style = 'display:none;'
+    v.setAttribute('onclick','showContent(this)');
+
+}
+
+</script>
+
+
+
+{%endblock%}
+
+
+
